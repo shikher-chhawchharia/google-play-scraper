@@ -93,6 +93,9 @@ def reviews(
             review_items, token = _fetch_review_items(
                 url, app_id, sort, _fetch_count, filter_score_with, token
             )
+
+            print("current token:",token)
+            sleep(2)
         except (TypeError, IndexError):
             token = None
             break
