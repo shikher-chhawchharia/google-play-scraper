@@ -93,11 +93,11 @@ def reviews(
             review_items, token = _fetch_review_items(
                 url, app_id, sort, _fetch_count, filter_score_with, token
             )
-
-            print("current token:",token)
-            sleep(2)
+            print("\n",token)
         except (TypeError, IndexError):
+            print("\ninside except ",token)
             token = None
+            print("\n",token)
             break
 
         for review in review_items:
@@ -121,11 +121,12 @@ def reviews(
 
 
 def reviews_all(app_id: str, sleep_milliseconds: int = 0, **kwargs) -> list:
+    
     kwargs.pop("count", None)
+    continuation_token = _ContinuationToken(kwargs['continuation_token'],'en','us','2',100, None)
+
     kwargs.pop("continuation_token", None)
-
-    continuation_token = None
-
+    
     result = []
 
     while True:
@@ -145,3 +146,7 @@ def reviews_all(app_id: str, sleep_milliseconds: int = 0, **kwargs) -> list:
             sleep(sleep_milliseconds / 1000)
 
     return result
+
+
+if __name__ == "__main__": 
+    review_list = reviews_all('com.cricbuzz.android.vernacular', 0,continuation_token = "Yq7oyNIvAAkuc69fG51sbAQS4otJxbObbt3xdr8tXxXyUdq4tVGtfgeKuptveGdP1srxaHVrNPzOYcfaEQ")
